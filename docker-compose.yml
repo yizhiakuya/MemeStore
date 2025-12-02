@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: yizhiakuya/memestore-frontend:latest
     ports:
       - "3000:80"
     depends_on:
@@ -14,12 +12,12 @@ services:
     restart: unless-stopped
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: yizhiakuya/memestore-backend:latest
     ports:
       - "8080:4000"
     environment:
+      - PORT=4000
+      - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:password@postgres:5432/memestore
       - REDIS_URL=redis://redis:6379
       - MINIO_ENDPOINT=minio
@@ -27,6 +25,7 @@ services:
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
       - MINIO_USE_SSL=false
+      - MINIO_BUCKET_NAME=memes
       - JWT_SECRET=your-super-secret-jwt-key-change-this
       - JWT_EXPIRES_IN=1h
       - JWT_REFRESH_EXPIRES_IN=7d
