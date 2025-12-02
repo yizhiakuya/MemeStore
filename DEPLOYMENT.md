@@ -13,6 +13,14 @@
 
 ### 一键部署（推荐）
 
+**方式一：直接执行（最简单）**
+
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/deploy.sh)
+```
+
+**方式二：克隆后执行**
+
 ```bash
 # 克隆项目
 git clone https://github.com/yizhiakuya/MemeStore.git

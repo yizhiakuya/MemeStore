@@ -24,13 +24,35 @@ fi
 
 echo "✅ Docker 环境检查通过"
 
+# 检查是否在项目目录中
+if [ ! -f "docker-compose.yml" ]; then
+    echo "📦 克隆 MemeStore 项目..."
+    if [ ! -d "MemeStore" ]; then
+        git clone https://github.com/yizhiakuya/MemeStore.git
+    else
+        echo "⚠️  MemeStore 目录已存在，使用现有目录"
+    fi
+    cd MemeStore
+fi
+
 # 检查是否存在 .env 文件
 if [ ! -f ".env" ]; then
     echo "📝 创建 .env 文件..."
     cp .env.example .env
     echo "⚠️  请编辑 .env 文件，配置必要的环境变量（特别是 JWT_SECRET）"
-    echo "   然后重新运行此脚本"
-    exit 0
+    echo "   文件路径: $(pwd)/.env"
+    echo ""
+    echo "💡 提示: 可以使用以下命令生成随机密钥:"
+    echo "   openssl rand -base64 32"
+    echo ""
+    read -p "是否现在编辑配置文件? (y/N) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        ${EDITOR:-nano} .env
+    else
+        echo "⚠️  记得稍后编辑 .env 文件再重新运行部署"
+        exit 0
+    fi
 fi
 
 echo "✅ 环境配置文件存在"

@@ -6,6 +6,11 @@
 
 **一键部署（推荐）**:
 ```bash
+bash <(curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/deploy.sh)
+```
+
+或者手动克隆:
+```bash
 git clone https://github.com/yizhiakuya/MemeStore.git
 cd MemeStore
 chmod +x deploy.sh
