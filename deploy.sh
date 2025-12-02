@@ -37,25 +37,49 @@ fi
 
 # 检查是否存在 .env 文件
 if [ ! -f ".env" ]; then
-    echo "📝 创建 .env 文件..."
-    cp .env.example .env
-    echo "⚠️  请编辑 .env 文件，配置必要的环境变量（特别是 JWT_SECRET）"
-    echo "   文件路径: $(pwd)/.env"
-    echo ""
-    echo "💡 提示: 可以使用以下命令生成随机密钥:"
-    echo "   openssl rand -base64 32"
-    echo ""
-    read -p "是否现在编辑配置文件? (y/N) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        ${EDITOR:-nano} .env
+    echo "📝 自动生成配置文件..."
+    
+    # 生成随机JWT密钥
+    if command -v openssl &> /dev/null; then
+        JWT_SECRET=$(openssl rand -base64 32)
     else
-        echo "⚠️  记得稍后编辑 .env 文件再重新运行部署"
-        exit 0
+        # 如果没有openssl，使用date和random生成
+        JWT_SECRET=$(date +%s | sha256sum | base64 | head -c 32)
     fi
-fi
+    
+    # 创建.env文件
+    cat > .env << EOF
+# 数据库配置
+DATABASE_URL=postgresql://postgres:password@postgres:5432/memestore
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+POSTGRES_DB=memestore
 
-echo "✅ 环境配置文件存在"
+# Redis配置
+REDIS_URL=redis://redis:6379
+
+# MinIO对象存储配置
+MINIO_ENDPOINT=minio
+MINIO_PORT=9000
+MINIO_ACCESS_KEY=minioadmin
+MINIO_SECRET_KEY=minioadmin
+MINIO_USE_SSL=false
+MINIO_BUCKET_NAME=memes
+
+# JWT配置（已自动生成）
+JWT_SECRET=${JWT_SECRET}
+JWT_EXPIRES_IN=1h
+JWT_REFRESH_EXPIRES_IN=7d
+
+# 应用配置
+NODE_ENV=production
+PORT=4000
+FRONTEND_URL=http://localhost:3000
+EOF
+    
+    echo "✅ 配置文件已自动生成"
+    echo "   JWT密钥: ${JWT_SECRET:0:10}... (已自动生成)"
+fi
 
 # 停止已运行的容器
 echo "🛑 停止现有容器..."
