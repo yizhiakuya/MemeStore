@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Meme {
+  id            String    @id @default(cuid())
+  title         String?
+  description   String?
+  
+  // 内容类型：image 或 text
+  type          String    @default("image")
+  
+  // 文字梗内容
+  textContent   String?
+  
+  // MinIO 存储路径（图片梗必填，文字梗可选）
+  originalUrl   String?
+  thumbnailUrl  String?
+  compressedUrl String?   
+  
+  // 元数据（图片梗有值，文字梗为空）
+  filename      String?
+  fileSize      Int?
+  mimeType      String?
+  width         Int?
+  height        Int?
+  
+  // 关系
+  tags          Tag[]
+  category      Category? @relation(fields: [categoryId], references: [id])
+  categoryId    String?
+  
+  // 统计
+  viewCount     Int       @default(0)
+  downloadCount Int       @default(0)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([categoryId])
+  @@index([createdAt])
+  @@index([type])
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  memes     Meme[]
+  createdAt DateTime @default(now())
+  
+  @@index([name])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  icon      String?
+  memes     Meme[]
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String?  @unique
+  password  String   
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+}

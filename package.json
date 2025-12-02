@@ -1,0 +1,25 @@
+{
+  "name": "memestore",
+  "version": "1.0.0",
+  "description": "MemeStore - 分布式 Meme 图片收集平台",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "start": "npm run dev",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "docker:up": "docker-compose up -d postgres redis minio",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:restart": "docker-compose restart",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build:all": "cd backend && npm run build && cd ../frontend && npm run build",
+    "prisma:migrate": "cd backend && npm run prisma:migrate",
+    "prisma:generate": "cd backend && npm run prisma:generate"
+  },
+  "keywords": ["meme", "image", "collection"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

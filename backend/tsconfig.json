@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    // 语言和环境
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022"],
+    
+    // 模块解析
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,
+    
+    // 类型检查
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    
+    // 输出
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    
+    // 互操作性
+    "forceConsistentCasingInFileNames": true,
+    
+    // 实验性功能
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "src/**/*",
+    "src/types/**/*.d.ts"
+  ],
+  "typeRoots": [
+    "./node_modules/@types",
+    "./src/types"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
+}
