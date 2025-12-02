@@ -13,13 +13,21 @@
 
 ### 一键部署（推荐）
 
-**方式一：直接执行（最简单）**
+**直接执行（最简单）**
 
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/deploy.sh)
 ```
 
-**方式二：克隆后执行**
+这个命令会自动：
+- ✅ 检查Docker环境
+- ✅ 克隆项目到当前目录
+- ✅ 创建配置文件
+- ✅ 拉取Docker镜像
+- ✅ 启动所有服务
+- ✅ 初始化数据库和存储
+
+**或手动执行**
 
 ```bash
 # 克隆项目

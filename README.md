@@ -4,40 +4,24 @@
 
 ## 🚀 快速部署
 
-**方式一：克隆后部署（私有仓库）**:
+**一键部署（推荐）**:
 ```bash
-# 克隆仓库（需要GitHub认证）
+bash <(curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/deploy.sh)
+```
+
+**或手动部署**:
+```bash
 git clone https://github.com/yizhiakuya/MemeStore.git
 cd MemeStore
-
-# 执行部署脚本
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-**方式二：直接使用Docker镜像（无需克隆）**:
-```bash
-# 创建工作目录
-mkdir memestore && cd memestore
-
-# 下载配置文件
-curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/.env.example -o .env
-curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/docker-compose.yml -o docker-compose.yml
-
-# 编辑配置文件
-nano .env
-
-# 启动服务
-docker-compose pull
-docker-compose up -d
-```
-
 📖 部署文档:
-- [PRIVATE_DEPLOY.md](./PRIVATE_DEPLOY.md) - **私有仓库部署指南（推荐先看）**
 - [DEPLOYMENT.md](./DEPLOYMENT.md) - 详细部署文档
 - [QUICK_START.md](./QUICK_START.md) - 快速开始指南
 
-🐳 Docker镜像（公开，无需认证）:
+🐳 Docker镜像:
 - Backend: `docker pull yizhiakuya/memestore-backend:latest`
 - Frontend: `docker pull yizhiakuya/memestore-frontend:latest`
 

@@ -11,7 +11,17 @@ https://github.com/yizhiakuya/MemeStore
 
 ## 🚀 一键部署
 
-### 方式一：使用部署脚本（推荐）
+### 最简单方式（推荐）
+
+直接在Linux服务器上执行：
+
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/yizhiakuya/MemeStore/main/deploy.sh)
+```
+
+就这么简单！脚本会自动完成所有部署步骤。
+
+### 或者手动部署
 
 ```bash
 # 克隆仓库
