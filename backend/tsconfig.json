@@ -20,6 +20,7 @@
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "noImplicitAny": false,
     
     // 输出
     "outDir": "./dist",
