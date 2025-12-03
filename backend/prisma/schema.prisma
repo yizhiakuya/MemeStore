@@ -69,11 +69,13 @@ model Category {
   createdAt DateTime @default(now())
 }
 
-model User {
+model SystemSetting {
   id        String   @id @default(cuid())
-  username  String   @unique
-  email     String?  @unique
-  password  String   
-  role      String   @default("user")
+  key       String   @unique
+  value     String?
+  isSecret  Boolean  @default(false) // 标记敏感信息
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([key])
 }

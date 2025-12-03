@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Moon, Sun, LogOut } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { useAuthStore } from '../store/authStore'
-import { Button } from './ui/Button'
 
 export default function Navbar() {
     const [darkMode, setDarkMode] = useState(() => {
@@ -13,7 +11,6 @@ export default function Navbar() {
         }
         return window.matchMedia('(prefers-color-scheme: dark)').matches
     })
-    const { user, logout } = useAuthStore()
     const [scrolled, setScrolled] = useState(false)
 
     useEffect(() => {
@@ -47,27 +44,6 @@ export default function Navbar() {
                     >
                         {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                     </button>
-                    {user ? (
-                        <div className="flex items-center gap-3">
-                            <span className="text-sm text-gray-600 dark:text-gray-300 font-medium">
-                                {user.username}
-                            </span>
-                            <Button
-                                variant="ghost"
-                                onClick={logout}
-                                className="flex items-center gap-2"
-                            >
-                                <LogOut className="w-4 h-4" />
-                                <span>登出</span>
-                            </Button>
-                        </div>
-                    ) : (
-                        <Link to="/login">
-                            <Button variant="primary" size="sm">
-                                登录
-                            </Button>
-                        </Link>
-                    )}
                 </div>
             </div>
         </nav>

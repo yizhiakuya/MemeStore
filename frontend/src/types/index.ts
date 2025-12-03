@@ -19,7 +19,7 @@ export interface Meme {
   type: MemeType;
   title?: string;
   description?: string;
-  
+
   // 图片梗字段
   originalUrl?: string;
   thumbnailUrl?: string;
@@ -29,19 +29,19 @@ export interface Meme {
   mimeType?: string;
   width?: number;
   height?: number;
-  
+
   // 文字梗字段
   textContent?: string;
-  
+
   // 关系
   tags: Tag[];
   category?: Category | null;
   categoryId?: string;
-  
+
   // 统计
   viewCount: number;
   downloadCount: number;
-  
+
   // 时间
   createdAt: string;
   updatedAt: string;
@@ -64,37 +64,7 @@ export interface PaginatedResponse<T> {
   };
 }
 
-// 用户类型
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  createdAt: string;
-}
-
-// 认证相关
-export interface AuthState {
-  user: User | null;
-  accessToken: string | null;
-  refreshToken: string | null;
-  login: (user: User, accessToken: string, refreshToken: string) => void;
-  logout: () => void;
-  updateToken: (accessToken: string) => void;
-}
-
 // 表单数据类型
-export interface LoginFormData {
-  username: string;
-  password: string;
-}
-
-export interface RegisterFormData {
-  username: string;
-  email: string;
-  password: string;
-}
-
 export interface UploadMemeFormData {
   title?: string;
   description?: string;

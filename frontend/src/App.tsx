@@ -2,8 +2,6 @@ import { Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Home from './pages/Home.tsx'
-import Login from './pages/Login.tsx'
-import Register from './pages/Register.tsx'
 import Navbar from './components/Navbar.tsx'
 
 function App() {
@@ -19,7 +17,7 @@ function App() {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-            <Toaster 
+            <Toaster
                 position="top-center"
                 toastOptions={{
                     duration: 3000,
@@ -44,8 +42,6 @@ function App() {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
             </Routes>
         </div>
     )

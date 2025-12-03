@@ -1,0 +1,38 @@
+==========================================
+GitHub OAuth 第三方登录配置步骤
+==========================================
+
+第1步：在GitHub创建OAuth App
+-----------------------------------------
+1. 访问: https://github.com/settings/developers
+2. 点击 "New OAuth App"
+3. 填写信息：
+   - Application name: MemeStore
+   - Homepage URL: http://localhost:3000
+   - Authorization callback URL: http://localhost:4000/api/auth/github/callback
+4. 点击 "Register application"
+5. 复制 Client ID 和生成 Client Secret
+
+第2步：配置后端环境变量
+-----------------------------------------
+在 backend/.env 文件末尾添加（如果文件不存在则创建）：
+
+GITHUB_CLIENT_ID=你的Client_ID
+GITHUB_CLIENT_SECRET=你的Client_Secret
+GITHUB_REDIRECT_URI=http://localhost:4000/api/auth/github/callback
+
+第3步：重启服务
+-----------------------------------------
+cd backend
+npm run dev
+
+第4步：测试登录
+-----------------------------------------
+1. 访问 http://localhost:3000/login
+2. 点击 "使用 GitHub 登录" 按钮
+3. 会自动跳转到 GitHub 授权页面（在GitHub网站上）
+4. 在GitHub页面点击 "Authorize"
+5. 自动跳转回你的网站并完成登录
+
+这就是标准的第三方登录流程！
+==========================================

@@ -2,11 +2,11 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.js';
 import memeRoutes from './routes/memes.js';
 import tagRoutes from './routes/tags.js';
 import categoryRoutes from './routes/categories.js';
 import statsRoutes from './routes/stats.js';
+import configRoutes from './routes/config.js';
 
 dotenv.config();
 
@@ -21,11 +21,11 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-app.use('/api/auth', authRoutes);
 app.use('/api/memes', memeRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/config', configRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });

@@ -1,6 +1,6 @@
 {
   "name": "memestore",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MemeStore - 分布式 Meme 图片收集平台",
   "scripts": {
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
@@ -16,7 +16,11 @@
     "prisma:migrate": "cd backend && npm run prisma:migrate",
     "prisma:generate": "cd backend && npm run prisma:generate"
   },
-  "keywords": ["meme", "image", "collection"],
+  "keywords": [
+    "meme",
+    "image",
+    "collection"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
