@@ -47,6 +47,15 @@ if [ ! -f ".env" ]; then
         JWT_SECRET=$(date +%s | sha256sum | base64 | head -c 32)
     fi
     
+    # 自动检测服务器IP地址
+    echo "🔍 检测服务器IP地址..."
+    SERVER_IP=$(hostname -I | awk '{print $1}')
+    if [ -z "$SERVER_IP" ]; then
+        # 如果hostname -I失败，尝试其他方法
+        SERVER_IP=$(ip route get 1 | awk '{print $7;exit}' 2>/dev/null || echo "localhost")
+    fi
+    echo "   检测到IP: $SERVER_IP"
+    
     # 创建.env文件
     cat > .env << EOF
 # 数据库配置
@@ -61,7 +70,7 @@ REDIS_URL=redis://redis:6379
 # MinIO对象存储配置
 MINIO_ENDPOINT=minio
 MINIO_PORT=9000
-MINIO_EXTERNAL_ENDPOINT=localhost
+MINIO_EXTERNAL_ENDPOINT=${SERVER_IP}
 MINIO_EXTERNAL_PORT=9000
 MINIO_ACCESS_KEY=minioadmin
 MINIO_SECRET_KEY=minioadmin

@@ -16,22 +16,22 @@ services:
     ports:
       - "8080:4000"
     environment:
-      - PORT=4000
-      - NODE_ENV=production
-      - DATABASE_URL=postgresql://postgres:password@postgres:5432/memestore
-      - REDIS_URL=redis://redis:6379
-      - MINIO_ENDPOINT=minio
-      - MINIO_PORT=9000
-      - MINIO_EXTERNAL_ENDPOINT=localhost
-      - MINIO_EXTERNAL_PORT=9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_USE_SSL=false
-      - MINIO_BUCKET_NAME=memes
-      - JWT_SECRET=your-super-secret-jwt-key-change-this
-      - JWT_EXPIRES_IN=1h
-      - JWT_REFRESH_EXPIRES_IN=7d
-      - FRONTEND_URL=http://localhost:3000
+      - PORT=${PORT:-4000}
+      - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:password@postgres:5432/memestore}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT:-minio}
+      - MINIO_PORT=${MINIO_PORT:-9000}
+      - MINIO_EXTERNAL_ENDPOINT=${MINIO_EXTERNAL_ENDPOINT:-localhost}
+      - MINIO_EXTERNAL_PORT=${MINIO_EXTERNAL_PORT:-9000}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin}
+      - MINIO_USE_SSL=${MINIO_USE_SSL:-false}
+      - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME:-memes}
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-this}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-1h}
+      - JWT_REFRESH_EXPIRES_IN=${JWT_REFRESH_EXPIRES_IN:-7d}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
     depends_on:
       postgres:
         condition: service_healthy
