@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Meme, Tag, Category, User } from '@prisma/client';
+import { Meme, Tag, Category } from '@prisma/client';
 
 // Meme 类型扩展
 export type MemeType = 'image' | 'text';
