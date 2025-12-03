@@ -25,22 +25,41 @@ export default function MemeCard({ meme, onClick }: MemeCardProps) {
         e.stopPropagation()
         if (isTextMeme) {
             try {
-                await navigator.clipboard.writeText(meme.textContent!)
-                toast.success('文字已复制到剪贴板！')
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(meme.textContent!)
+                    toast.success('文字已复制到剪贴板！')
+                } else {
+                    // 降级方案：使用传统方法
+                    const textArea = document.createElement('textarea')
+                    textArea.value = meme.textContent!
+                    textArea.style.position = 'fixed'
+                    textArea.style.opacity = '0'
+                    document.body.appendChild(textArea)
+                    textArea.select()
+                    document.execCommand('copy')
+                    document.body.removeChild(textArea)
+                    toast.success('文字已复制到剪贴板！')
+                }
             } catch (err) {
                 console.error('Copy error:', err)
                 toast.error('复制失败')
             }
         } else {
             try {
-                const response = await fetch(meme.originalUrl!)
-                const blob = await response.blob()
-                await navigator.clipboard.write([
-                    new ClipboardItem({
-                        [blob.type]: blob
-                    })
-                ])
-                toast.success('图片已复制到剪贴板！')
+                // 检查浏览器是否支持 Clipboard API
+                if (navigator.clipboard && navigator.clipboard.write) {
+                    const response = await fetch(meme.originalUrl!)
+                    const blob = await response.blob()
+                    await navigator.clipboard.write([
+                        new ClipboardItem({
+                            [blob.type]: blob
+                        })
+                    ])
+                    toast.success('图片已复制到剪贴板！')
+                } else {
+                    // HTTP环境下无法使用Clipboard API，提示下载
+                    toast.error('请右键保存图片或使用下载按钮')
+                }
             } catch (err) {
                 console.error('Copy error:', err)
                 toast.error('复制失败，请尝试手动下载')
