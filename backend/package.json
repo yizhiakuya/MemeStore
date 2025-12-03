@@ -6,13 +6,16 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/app.ts",
-    "start": "tsx src/app.ts",
+    "start": "node dist/app.js",
+    "start:dev": "tsx src/app.ts",
     "build": "tsc",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "init-minio": "tsx src/scripts/init-minio.ts",
-    "create-admin": "tsx src/scripts/create-admin.ts"
+    "init-minio": "node dist/scripts/init-minio.js",
+    "init-minio:dev": "tsx src/scripts/init-minio.ts",
+    "create-admin": "node dist/scripts/create-admin.js",
+    "create-admin:dev": "tsx src/scripts/create-admin.ts"
   },
   "keywords": [
     "meme",
