@@ -22,6 +22,8 @@ services:
       - REDIS_URL=redis://redis:6379
       - MINIO_ENDPOINT=minio
       - MINIO_PORT=9000
+      - MINIO_EXTERNAL_ENDPOINT=localhost
+      - MINIO_EXTERNAL_PORT=9000
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
       - MINIO_USE_SSL=false

@@ -76,8 +76,9 @@ class MinioService {
 
     getFileUrl(bucketType: BucketType, fileName: string): string {
         const bucket = this.buckets[bucketType];
-        const endpoint = process.env.MINIO_ENDPOINT || 'localhost';
-        const port = process.env.MINIO_PORT || '9000';
+        // 使用外部访问地址（浏览器可访问），如果未设置则使用内部地址
+        const endpoint = process.env.MINIO_EXTERNAL_ENDPOINT || process.env.MINIO_ENDPOINT || 'localhost';
+        const port = process.env.MINIO_EXTERNAL_PORT || process.env.MINIO_PORT || '9000';
         const protocol = process.env.MINIO_USE_SSL === 'true' ? 'https' : 'http';
 
         return `${protocol}://${endpoint}:${port}/${bucket}/${fileName}`;
