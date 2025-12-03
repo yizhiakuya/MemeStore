@@ -54,7 +54,7 @@ export default function MemeModal({ meme, onClose }: MemeModalProps) {
         } else {
             try {
                 // 检查浏览器是否支持 Clipboard API
-                if (navigator.clipboard && navigator.clipboard.write) {
+                if (navigator.clipboard && navigator.clipboard.write && window.isSecureContext) {
                     const response = await fetch(meme.originalUrl!)
                     const blob = await response.blob()
                     await navigator.clipboard.write([
@@ -64,12 +64,29 @@ export default function MemeModal({ meme, onClose }: MemeModalProps) {
                     ])
                     toast.success('图片已复制到剪贴板！')
                 } else {
-                    // HTTP环境下无法使用Clipboard API，提示下载
-                    toast.error('请右键保存图片或使用下载按钮')
+                    // HTTP环境下无法复制，自动下载
+                    const link = document.createElement('a')
+                    link.href = meme.originalUrl!
+                    link.download = `meme-${meme.id}.${meme.originalUrl!.split('.').pop()}`
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                    toast.success('图片已下载（HTTP环境不支持复制）')
                 }
             } catch (err) {
                 console.error('Copy error:', err)
-                toast.error('复制失败，请尝试手动下载')
+                // 降级到下载
+                try {
+                    const link = document.createElement('a')
+                    link.href = meme.originalUrl!
+                    link.download = `meme-${meme.id}.${meme.originalUrl!.split('.').pop()}`
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                    toast.success('已自动下载图片')
+                } catch {
+                    toast.error('操作失败，请手动下载')
+                }
             }
         }
     }
