@@ -64,14 +64,14 @@ export const register = async (req: Request<{}, {}, RegisterBody>, res: Response
 
         const accessToken = jwt.sign(
             { id: user.id, username: user.username, role: user.role },
-            process.env.JWT_SECRET!,
-            { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
+            process.env.JWT_SECRET as string,
+            { expiresIn: (process.env.JWT_EXPIRES_IN || '1h') as string }
         );
 
         const refreshToken = jwt.sign(
             { id: user.id },
-            process.env.JWT_SECRET!,
-            { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d' }
+            process.env.JWT_SECRET as string,
+            { expiresIn: (process.env.JWT_REFRESH_EXPIRES_IN || '7d') as string }
         );
 
         res.status(201).json({
@@ -109,14 +109,14 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response): Pro
 
         const accessToken = jwt.sign(
             { id: user.id, username: user.username, role: user.role },
-            process.env.JWT_SECRET!,
-            { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
+            process.env.JWT_SECRET as string,
+            { expiresIn: (process.env.JWT_EXPIRES_IN || '1h') as string }
         );
 
         const refreshToken = jwt.sign(
             { id: user.id },
-            process.env.JWT_SECRET!,
-            { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d' }
+            process.env.JWT_SECRET as string,
+            { expiresIn: (process.env.JWT_REFRESH_EXPIRES_IN || '7d') as string }
         );
         res.json({
             accessToken,
@@ -141,7 +141,7 @@ export const refresh = async (req: Request<{}, {}, RefreshBody>, res: Response):
             return res.status(400).json({ error: '刷新令牌不能为空' });
         }
 
-        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET!) as JWTPayload;
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET as string) as JWTPayload;
         const user = await prisma.user.findUnique({ where: { id: decoded.id } });
 
         if (!user) {
@@ -150,8 +150,8 @@ export const refresh = async (req: Request<{}, {}, RefreshBody>, res: Response):
 
         const accessToken = jwt.sign(
             { id: user.id, username: user.username, role: user.role },
-            process.env.JWT_SECRET!,
-            { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
+            process.env.JWT_SECRET as string,
+            { expiresIn: (process.env.JWT_EXPIRES_IN || '1h') as string }
         );
 
         res.json({ accessToken });
