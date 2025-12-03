@@ -64,14 +64,9 @@ export default function MemeModal({ meme, onClose }: MemeModalProps) {
                     ])
                     toast.success('图片已复制到剪贴板！')
                 } else {
-                    // HTTP环境下无法复制，自动下载
-                    const link = document.createElement('a')
-                    link.href = meme.originalUrl!
-                    link.download = `meme-${meme.id}.${meme.originalUrl!.split('.').pop()}`
-                    document.body.appendChild(link)
-                    link.click()
-                    document.body.removeChild(link)
-                    toast.success('图片已下载（HTTP环境不支持复制）')
+                    // HTTP环境下无法通过API复制，打开新标签页让用户右键复制
+                    window.open(meme.originalUrl!, '_blank')
+                    toast.success('已在新标签页打开，请右键复制图片')
                 }
             } catch (err) {
                 console.error('Copy error:', err)
