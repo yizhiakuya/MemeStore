@@ -2,6 +2,11 @@
 
 分布式 Meme 图片收集平台
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yizhiakuya/MemeStore/releases/tag/v1.0.0)
+[![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)](https://hub.docker.com/u/yizhiakuya)
+
+> 📌 **稳定版本**: [v1.0.0](https://github.com/yizhiakuya/MemeStore/tree/v1.0) | **开发分支**: main
+
 ## 🚀 快速部署
 
 **一键部署（推荐）**:
